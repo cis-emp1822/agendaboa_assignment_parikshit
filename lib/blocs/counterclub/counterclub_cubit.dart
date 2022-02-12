@@ -13,7 +13,26 @@ class CounterclubCubit extends Cubit<CounterclubState> {
             counterC: counterRepository.counterC,
             tabIndex: counterRepository.selectedTab));
 
+  initial() async {
+    emit(CounterclubProcessing(
+        counterA: counterRepository!.counterA,
+        counterB: counterRepository!.counterB,
+        counterC: counterRepository!.counterC,
+        tabIndex: counterRepository!.selectedTab));
+    await counterRepository!.download();
+    emit(CounterclubInitial(
+        counterA: counterRepository!.counterA,
+        counterB: counterRepository!.counterB,
+        counterC: counterRepository!.counterC,
+        tabIndex: counterRepository!.selectedTab));
+  }
+
   resetAll() async {
+    emit(CounterclubProcessing(
+        counterA: counterRepository!.counterA,
+        counterB: counterRepository!.counterB,
+        counterC: counterRepository!.counterC,
+        tabIndex: counterRepository!.selectedTab));
     await counterRepository!.resetAll();
     emit(CounterclubInitial(
         counterA: counterRepository!.counterA,
@@ -23,6 +42,11 @@ class CounterclubCubit extends Cubit<CounterclubState> {
   }
 
   increment() async {
+    emit(CounterclubProcessing(
+        counterA: counterRepository!.counterA,
+        counterB: counterRepository!.counterB,
+        counterC: counterRepository!.counterC,
+        tabIndex: counterRepository!.selectedTab));
     await counterRepository!.increment();
     emit(CounterclubInitial(
         counterA: counterRepository!.counterA,
@@ -31,8 +55,8 @@ class CounterclubCubit extends Cubit<CounterclubState> {
         tabIndex: counterRepository!.selectedTab));
   }
 
-  changeTab(int index) async {
-    await counterRepository!.selectTab(index);
+  changeTab(int index) {
+    counterRepository!.selectTab(index);
     emit(CounterclubInitial(
         counterA: counterRepository!.counterA,
         counterB: counterRepository!.counterB,

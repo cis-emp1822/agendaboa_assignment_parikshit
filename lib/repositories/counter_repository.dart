@@ -11,17 +11,17 @@ class CounterRepository {
     download();
   }
 
-  download() async {
+  Future<bool> download() async {
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('counters').doc('counters');
     DocumentSnapshot docSnap = await docRef.get();
     Map<String, dynamic> fileData = (docSnap.data()) as Map<String, dynamic>;
-    if (fileData.entries.isNotEmpty && fileData.entries.length == 4) {
+    if (fileData.entries.isNotEmpty && fileData.entries.length == 3) {
       counterA = fileData['counterA'];
       counterB = fileData['counterB'];
       counterC = fileData['counterC'];
-      selectedTab = fileData['selectedTab'];
     }
+    return true;
   }
 
   upload() async {
@@ -32,7 +32,6 @@ class CounterRepository {
       fileData['counterA'] = counterA;
       fileData['counterB'] = counterB;
       fileData['counterC'] = counterC;
-      fileData['selectedTab'] = selectedTab;
       await docRef.set(fileData);
     } catch (e) {
       log(e.toString());
@@ -55,9 +54,8 @@ class CounterRepository {
     await synchronize();
   }
 
-  Future selectTab(int index) async {
+  selectTab(int index) {
     selectedTab = index;
-    await synchronize();
   }
 
   Future resetAll() async {

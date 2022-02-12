@@ -17,7 +17,9 @@ class Counter2Screen extends StatelessWidget {
           BlocBuilder<CounterclubCubit, CounterclubState>(
               builder: (context, state) => state is CounterclubInitial
                   ? Text(state.counterB.toString())
-                  : Container())
+                  : state is CounterclubProcessing
+                      ? Text(state.counterB.toString())
+                      : Container())
         ],
       ),
     );

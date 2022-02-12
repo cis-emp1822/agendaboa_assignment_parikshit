@@ -17,7 +17,9 @@ class Counter3Screen extends StatelessWidget {
           BlocBuilder<CounterclubCubit, CounterclubState>(
               builder: (context, state) => state is CounterclubInitial
                   ? Text(state.counterC.toString())
-                  : Container())
+                  : state is CounterclubProcessing
+                      ? Text(state.counterC.toString())
+                      : Container())
         ],
       ),
     );

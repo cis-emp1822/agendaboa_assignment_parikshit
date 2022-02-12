@@ -11,3 +11,12 @@ class CounterclubInitial extends CounterclubState {
   CounterclubInitial(
       {this.counterA, this.counterB, this.counterC, this.tabIndex});
 }
+
+class CounterclubProcessing extends CounterclubState {
+  final int? counterA;
+  final int? counterB;
+  final int? counterC;
+  final int? tabIndex;
+  CounterclubProcessing(
+      {this.counterA, this.counterB, this.counterC, this.tabIndex});
+}
